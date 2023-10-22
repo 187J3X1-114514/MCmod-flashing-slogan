@@ -1,0 +1,17 @@
+modLoader="javafml" #mandatory
+loaderVersion="[*,)"
+license="阿巴阿巴"
+[[mods]] #mandatory
+modId="mcmodst" #mandatory
+version="3.2" #mandatory
+displayName="MC百科标语" #mandatory
+logoFile="logo.png"
+credits="热血少年小乐,FeO_Fe2O3,初雪·冰,187J3X1,重生是希望"
+authors="热血少年小乐"
+description='''
+emmmmmmmmmm,这个mod本质上就个资源包(还有个输出日志的代码),需要解释吗.. by 187J3X1
+'''
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+    versionRange="[*,)"
+    ordering="NONE"
+    side="BOTH"
