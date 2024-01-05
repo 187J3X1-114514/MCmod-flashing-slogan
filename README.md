@@ -16,8 +16,6 @@
 > 注意 : 本项目不提供标语文件,请自行获取 (当然,你也可以从一些奇怪的地方获取)
 >
 > 要求:
->> Python
->>> BeautifulSoup,requests,tqdm
 >>
 >>Git
 >>
@@ -28,7 +26,6 @@
 > git clone https://github.com/187J3X1-114514/MCmod-flashing-slogan
 > cd MCmod-flashing-slogan
 > ./gradlew
-> python splashes/getSplashes.py
 > ./gradlew build
 >```
 >之后,在"build\libs"中的就是模组文件

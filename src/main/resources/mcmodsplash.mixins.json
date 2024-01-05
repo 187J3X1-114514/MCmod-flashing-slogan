@@ -1,0 +1,31 @@
+{
+
+  "required": true,
+
+  "package": "com.mcmodsplash.homo.mixin",
+
+  "compatibilityLevel": "JAVA_8",
+
+  "minVersion": "0.8",
+
+  "refmap": "mcmodsplash.refmap.json",
+
+  "plugin": "com.mcmodsplash.homo.mixin.mixin",
+
+  "mixins": [
+    "SplashManagerMixin"
+  ],
+
+  "client": [
+
+
+
+  ],
+
+  "injectors": {
+
+    "defaultRequire": 1
+
+  }
+
+}
