@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 @Mixin(SplashManager.class)
 public abstract class SplashManagerMixin {
+    private static boolean once = true;
     /**
      * 额，很无语
      *
@@ -18,7 +19,11 @@ public abstract class SplashManagerMixin {
     @Nullable //IDE提示的
     @Overwrite
     public String getSplash(){
-            return GetMCMODSplash.get();
+        if (once){
+            once = false;
+            return GetMCMODSplash.get(true);
+        }
+        return GetMCMODSplash.get(false);
     }
 
 }
