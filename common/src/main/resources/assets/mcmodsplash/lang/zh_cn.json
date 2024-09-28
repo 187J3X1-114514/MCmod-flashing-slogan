@@ -1,0 +1,12 @@
+{
+  "mcmodsplash.config.title": "MC百科标语配置",
+
+  "mcmodsplash.config.getSplashTimeout": "MC百科标语获取超时时间",
+  "mcmodsplash.config.obtainSplashOnline": "在线获取MC百科标语",
+  "mcmodsplash.config.getSplashTimeout.tip": "标语获取超时时间，超过该时间自动使用离线标语",
+  "mcmodsplash.config.obtainSplashOnline.tip": "开启后会优先从MC百科主页获取标语，关闭后直接使用离线标语",
+  "mcmodsplash.config.colourfulSplash": "五颜六色的标语",
+  "mcmodsplash.config.colourfulSplash.tip": "开启后标语会变得五颜六色，关闭后使用默认标语颜色",
+  "mcmodsplash.config.splashChangeInterval": "标语切换的间隔时间",
+  "mcmodsplash.config.splashChangeInterval.tip": "开启后标语会每隔一段时间就切换一次，关闭后不变，重新进入主菜单后生效"
+}

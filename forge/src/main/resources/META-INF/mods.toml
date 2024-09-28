@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[*,)"
+license="代码部分：MIT    MCMOD标语：CC BY-NC-SA 3.0"
+logoFile="logo.png"
+issueTrackerURL="https://github.com/187J3X1-114514/MCmod-flashing-slogan/issues"
+
+[[mods]]
+modId="mcmodsplash"
+version="3.4"
+displayName="MC百科标语"
+
+credits="感谢FeO_Fe2O3提出的奇怪想法,还有小乐er以及其他几位贡献者;感谢喵呜机(百科站长)整的生屮标语(没笑停过的那种)"
+authors="重生是希望(www.mcmod.cn/author/24402.html)，热血少年小乐(www.mcmod.cn/author/27343.html)，FeO_Fe2O3(www.mcmod.cn/author/27421.html)，初雪·冰(www.mcmod.cn/author/25810.html)，187J3X1(www.mcmod.cn/author/28442.html)，BunnimimiTotem(www.mcmod.cn/author/26478.html)，工具人巴尼(www.mcmod.cn/author/30431.html)"
+description='''
+把标题界面的闪烁标语换成MCMOD的生屮标语
+'''
+
+[[dependencies.mcmodsplash]] #optional
+   modId="forge"
+   mandatory=true
+   versionRange="[*,)"
+   ordering="NONE"
+   side="BOTH"
+# Here's another dependency
+[[dependencies.mcmodsplash]]
+   modId="minecraft"
+   mandatory=true
+   versionRange="[*,)"
+   ordering="NONE"
+   side="BOTH"

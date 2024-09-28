@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "mcmodsplash",
+  "version": "${version}",
+  "name": "MC百科标语",
+  "description": "把标题界面的闪烁标语换成MCMOD的生屮标语",
+  "authors": [
+    "重生是希望(www.mcmod.cn/author/24402.html)","热血少年小乐(www.mcmod.cn/author/27343.html)","FeO_Fe2O3(www.mcmod.cn/author/27421.html)","初雪·冰(www.mcmod.cn/author/25810.html)","187J3X1(www.mcmod.cn/author/28442.html)","BunnimimiTotem(www.mcmod.cn/author/26478.html)","工具人巴尼(www.mcmod.cn/author/30431.html)"
+  ],
+  "contact": {
+    "homepage": "https://www.mcmod.cn/class/8567.html",
+    "sources": "https://github.com/187J3X1-114514/MCmod-flashing-slogan",
+    "issues": "https://github.com/187J3X1-114514/MCmod-flashing-slogan/issues"
+  },
+
+  "license": "代码部分：MIT    MCMOD标语：CC BY-NC-SA 3.0",
+  "icon": "logo.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "io.homo.mcmodsplash.mcmodsplash.fabric.MCMODSplashFabric"
+    ],
+    "modmenu": [
+      "io.homo.mcmodsplash.mcmodsplash.fabric.config.ModMenu"
+    ]
+  },
+  "mixins": [
+    "mcmodsplash.mixins.json",
+    "mcmodsplash-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "*"
+  }
+}
