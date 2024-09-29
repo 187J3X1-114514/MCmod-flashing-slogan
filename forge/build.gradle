@@ -4,7 +4,7 @@ plugins {
 loom {
     forge {
         mixinConfig "mcmodsplash-common.mixins.json"
-        mixinConfig "mcmodsplash.mixins.json"
+        //mixinConfig "mcmodsplash.mixins.json"
     }
 }
 architectury {

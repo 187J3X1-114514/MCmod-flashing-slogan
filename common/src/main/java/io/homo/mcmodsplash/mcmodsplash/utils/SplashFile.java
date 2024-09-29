@@ -1,8 +1,6 @@
 package io.homo.mcmodsplash.mcmodsplash.utils;
 
 import io.homo.mcmodsplash.mcmodsplash.MCMODSplash;
-import net.minecraft.client.gui.components.SplashRenderer;
-import net.minecraft.resources.ResourceLocation;
 
 import java.io.BufferedReader;
 import java.io.IOException;

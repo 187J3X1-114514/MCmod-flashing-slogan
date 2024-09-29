@@ -2,7 +2,6 @@ package io.homo.mcmodsplash.mcmodsplash.utils;
 
 import io.homo.mcmodsplash.mcmodsplash.MCMODSplash;
 import net.minecraft.Util;
-import net.minecraft.client.gui.components.SplashRenderer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

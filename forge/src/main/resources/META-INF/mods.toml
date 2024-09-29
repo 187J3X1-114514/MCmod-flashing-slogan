@@ -6,7 +6,7 @@ issueTrackerURL="https://github.com/187J3X1-114514/MCmod-flashing-slogan/issues"
 
 [[mods]]
 modId="mcmodsplash"
-version="3.4"
+version="${version}"
 displayName="MC百科标语"
 
 credits="感谢FeO_Fe2O3提出的奇怪想法,还有小乐er以及其他几位贡献者;感谢喵呜机(百科站长)整的生屮标语(没笑停过的那种)"

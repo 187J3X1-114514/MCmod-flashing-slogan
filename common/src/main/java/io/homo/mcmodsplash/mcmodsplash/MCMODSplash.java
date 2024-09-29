@@ -2,11 +2,8 @@ package io.homo.mcmodsplash.mcmodsplash;
 
 import io.homo.mcmodsplash.mcmodsplash.config.Config;
 import io.homo.mcmodsplash.mcmodsplash.utils.CustomSplashRenderer;
-import io.homo.mcmodsplash.mcmodsplash.utils.SplashFile;
 
 import io.homo.mcmodsplash.mcmodsplash.utils.SplashManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.SplashRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

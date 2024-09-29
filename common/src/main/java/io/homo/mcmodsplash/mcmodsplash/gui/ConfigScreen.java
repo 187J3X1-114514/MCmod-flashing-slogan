@@ -1,15 +1,16 @@
 package io.homo.mcmodsplash.mcmodsplash.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.homo.mcmodsplash.mcmodsplash.MCMODSplash;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import org.apache.commons.compress.utils.Lists;
 
 import java.util.List;
@@ -86,12 +87,12 @@ public class ConfigScreen  extends OptionsSubScreen {
     }
 
     protected void createFooter() {
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
+        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 27, 200, 20, CommonComponents.GUI_DONE, (button) -> {
             this.updateConfig();
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.lastScreen);
             }
-        }).bounds(this.width / 2 - 100, this.height - 27, 200, 20).build());
+        }));
     }
 
     private void updateConfig(){
@@ -102,8 +103,13 @@ public class ConfigScreen  extends OptionsSubScreen {
         MCMODSplash.getInstance().config.write();
     }
 
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
-        this.basicListRender(guiGraphics, this.list, i, j, f);
+    public void render(PoseStack poseStack, int i, int j, float f) {
+        this.renderBackground(poseStack);
+        this.list.render(poseStack, i, j, f);
+        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 20, 16777215);
+        super.render(poseStack, i, j, f);
+        List<FormattedCharSequence> list = tooltipAt(this.list, i, j);
+        this.renderTooltip(poseStack, list, i, j);
     }
 
     @Override
