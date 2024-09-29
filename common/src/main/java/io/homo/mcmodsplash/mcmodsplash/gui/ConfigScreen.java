@@ -2,14 +2,17 @@ package io.homo.mcmodsplash.mcmodsplash.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.homo.mcmodsplash.mcmodsplash.MCMODSplash;
+import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.OptionInstance;
+import net.minecraft.client.Option;
+import net.minecraft.client.ProgressOption;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import org.apache.commons.compress.utils.Lists;
 
@@ -17,13 +20,13 @@ import java.util.List;
 
 public class ConfigScreen  extends OptionsSubScreen {
 
-    public OptionInstance<Boolean> obtainSplashOnline;
-    public OptionInstance<Integer> getSplashTimeout;
-    public OptionInstance<Boolean> colourfulSplash;
-    public OptionInstance<Integer> splashChangeInterval;
+    public CycleOption<Boolean> obtainSplashOnline;
+    public ProgressOption getSplashTimeout;
+    public CycleOption<Boolean> colourfulSplash;
+    public ProgressOption splashChangeInterval;
 
 
-    private final List<OptionInstance<?>> optionsInstance = Lists.newArrayList();
+    private final List<Option> optionsInstance = Lists.newArrayList();
     protected OptionsList list;
 
     public static ConfigScreen buildConfigScreen(Screen p){
@@ -32,43 +35,43 @@ public class ConfigScreen  extends OptionsSubScreen {
 
 
     private ConfigScreen(Screen screen) {
-        super(screen,Minecraft.getInstance().options, Component.translatable("mcmodsplash.config.title"));
-        this.obtainSplashOnline = OptionInstance.createBoolean(
+        super(screen,Minecraft.getInstance().options, new TranslatableComponent("mcmodsplash.config.title"));
+        this.obtainSplashOnline = CycleOption.createOnOff(
                 "mcmodsplash.config.obtainSplashOnline",
-                OptionInstance.cachedConstantTooltip(
-                        Component.translatable("mcmodsplash.config.obtainSplashOnline.tip")
-                ),
-                MCMODSplash.getInstance().config.obtainSplashOnline,
-                (boolean_) -> {
-
-                });
-        this.colourfulSplash = OptionInstance.createBoolean(
+                new TranslatableComponent("mcmodsplash.config.obtainSplashOnline.tip"),
+                (options) -> MCMODSplash.getInstance().config.obtainSplashOnline,
+                (options, option, boolean_) -> MCMODSplash.getInstance().config.obtainSplashOnline = boolean_);
+        this.colourfulSplash = CycleOption.createOnOff(
                 "mcmodsplash.config.colourfulSplash",
-                OptionInstance.cachedConstantTooltip(
-                        Component.translatable("mcmodsplash.config.colourfulSplash.tip")
-                ),
-                MCMODSplash.getInstance().config.colourfulSplash,
-                (boolean_) -> {
-
-                });
-        this.getSplashTimeout = new OptionInstance<>(
+                new TranslatableComponent("mcmodsplash.config.colourfulSplash.tip"),
+                (options) ->MCMODSplash.getInstance().config.colourfulSplash,
+                (options, option, boolean_) -> MCMODSplash.getInstance().config.colourfulSplash = boolean_);
+        this.getSplashTimeout = new ProgressOption(
                 "mcmodsplash.config.getSplashTimeout",
-                OptionInstance.cachedConstantTooltip(Component.translatable("mcmodsplash.config.getSplashTimeout.tip")),
-                (component, integer) -> Component.literal(component.getString()+" : "+integer.toString()+"ms"),
-                new OptionInstance.IntRange(100, 15000), MCMODSplash.getInstance().config.MCMOD_TIMEOUT,
-                (integer) -> {
-                });
-        this.splashChangeInterval = new OptionInstance<>(
+                100,
+                15000,
+                1.0f,
+                (options) -> (double) MCMODSplash.getInstance().config.MCMOD_TIMEOUT,
+                (options, double_) -> MCMODSplash.getInstance().config.MCMOD_TIMEOUT = double_.intValue(),
+                (options, progressOption) -> new TextComponent(new TranslatableComponent("mcmodsplash.config.getSplashTimeout").getString()+" : "+MCMODSplash.getInstance().config.MCMOD_TIMEOUT+"ms"),
+                (minecraft)-> minecraft.font.split(new TranslatableComponent("mcmodsplash.config.colourfulSplash.tip"), 200)
+        );
+        this.splashChangeInterval = new ProgressOption(
                 "mcmodsplash.config.splashChangeInterval",
-                OptionInstance.cachedConstantTooltip(Component.translatable("mcmodsplash.config.splashChangeInterval.tip")),
-                (component, integer) -> {
-                    if (integer == -1)return Component.literal(component.getString() + " : " +CommonComponents.OPTION_OFF.getString());
-                    if (integer == 0)return Component.literal(component.getString() + " : " +"让你飞起来");
-                    return Component.literal(component.getString() + " : " + integer + "s");
+                -1,
+                300,
+                1.0f,
+                (options) -> (double) ((double) MCMODSplash.getInstance().config.splashChangeInterval == 10?0:MCMODSplash.getInstance().config.splashChangeInterval == -1 ? -1:(MCMODSplash.getInstance().config.splashChangeInterval/1000)),
+                (options, double_) -> MCMODSplash.getInstance().config.splashChangeInterval = double_.intValue() == -1 ? -1 : double_.intValue() == 0 ? 10 : double_.intValue()*1000,
+                (options, progressOption) -> {
+                    int integer = MCMODSplash.getInstance().config.splashChangeInterval;
+                    TranslatableComponent component = new TranslatableComponent("mcmodsplash.config.splashChangeInterval");
+                    if (integer == -1)return new TextComponent(component.getString() + " : " +CommonComponents.OPTION_OFF.getString());
+                    if (integer == 10)return new TextComponent(component.getString() + " : " +"让你飞起来");
+                    return new TextComponent(component.getString() + " : " + integer/1000 + "s");
                 },
-                new OptionInstance.IntRange(-1, 300), MCMODSplash.getInstance().config.splashChangeInterval == 10?0:MCMODSplash.getInstance().config.splashChangeInterval == -1 ? -1:(MCMODSplash.getInstance().config.splashChangeInterval/1000),
-                (integer) -> {
-                });
+                (minecraft)-> minecraft.font.split(new TranslatableComponent("mcmodsplash.config.splashChangeInterval.tip"), 200)
+        );
         this.optionsInstance.add(this.obtainSplashOnline);
         this.optionsInstance.add(this.getSplashTimeout);
         this.optionsInstance.add(this.colourfulSplash);
@@ -78,7 +81,7 @@ public class ConfigScreen  extends OptionsSubScreen {
 
     protected void init() {
         this.list = new OptionsList(this.minecraft, this.width, this.height, 32, this.height - 32, 25);
-        for (OptionInstance<?> option : this.optionsInstance) {
+        for (Option option : this.optionsInstance) {
             this.list.addBig(option);
         }
         this.addWidget(this.list);
@@ -96,10 +99,10 @@ public class ConfigScreen  extends OptionsSubScreen {
     }
 
     private void updateConfig(){
-        MCMODSplash.getInstance().config.obtainSplashOnline = this.obtainSplashOnline.get();
-        MCMODSplash.getInstance().config.colourfulSplash = this.colourfulSplash.get();
-        MCMODSplash.getInstance().config.MCMOD_TIMEOUT= this.getSplashTimeout.get();
-        MCMODSplash.getInstance().config.splashChangeInterval = this.splashChangeInterval.get() == -1 ? -1 : this.splashChangeInterval.get() == 0 ? 10 : this.splashChangeInterval.get()*1000;
+        //MCMODSplash.getInstance().config.obtainSplashOnline = this.obtainSplashOnline.get();
+        //MCMODSplash.getInstance().config.colourfulSplash = this.colourfulSplash.get();
+        //MCMODSplash.getInstance().config.MCMOD_TIMEOUT= this.getSplashTimeout.get();
+        //MCMODSplash.getInstance().config.splashChangeInterval = this.splashChangeInterval.get() == -1 ? -1 : this.splashChangeInterval.get() == 0 ? 10 : this.splashChangeInterval.get()*1000;
         MCMODSplash.getInstance().config.write();
     }
 
