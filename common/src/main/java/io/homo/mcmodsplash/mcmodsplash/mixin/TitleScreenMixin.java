@@ -63,7 +63,7 @@ public class TitleScreenMixin {
         MCMODSplash.currentSplashRenderer = null;
     }
 
-    @Inject(method = "render",at= @At(value = "INVOKE", target = "Lnet/minecraft/WorldVersion;getName()Ljava/lang/String;"))
+    @Inject(method = "render",at= @At(value = "INVOKE", target = "Lnet/minecraft/SharedConstants;getCurrentVersion()Lcom/mojang/bridge/game/GameVersion;"))
     public void renderSplash(PoseStack poseStack, int i, int j, float f, CallbackInfo ci){
         if (MCMODSplash.currentSplashRenderer != null){
             float g = this.fading ? (float)(Util.getMillis() - this.fadeInStart) / 1000.0F : 1.0F;

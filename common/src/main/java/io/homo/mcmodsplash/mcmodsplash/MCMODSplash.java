@@ -4,13 +4,13 @@ import io.homo.mcmodsplash.mcmodsplash.config.Config;
 import io.homo.mcmodsplash.mcmodsplash.utils.CustomSplashRenderer;
 
 import io.homo.mcmodsplash.mcmodsplash.utils.SplashManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MCMODSplash
 {
 	public static final String MOD_ID = "mcmodsplash";
-	public static final Logger LOGGER = LoggerFactory.getLogger("MCMODSplash");
+	public static final Logger LOGGER = LogManager.getLogger("MCMODSplash");
 	public Config config;
 	public SplashManager splashManager;
 	public static CustomSplashRenderer currentSplashRenderer;

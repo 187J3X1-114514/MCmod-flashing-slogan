@@ -2,10 +2,7 @@ package io.homo.mcmodsplash.mcmodsplash.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.homo.mcmodsplash.mcmodsplash.MCMODSplash;
-import net.minecraft.client.CycleOption;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.Option;
-import net.minecraft.client.ProgressOption;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.OptionsSubScreen;
@@ -14,19 +11,19 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
-import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigScreen  extends OptionsSubScreen {
 
-    public CycleOption<Boolean> obtainSplashOnline;
+    public BooleanOption obtainSplashOnline;
     public ProgressOption getSplashTimeout;
-    public CycleOption<Boolean> colourfulSplash;
+    public BooleanOption colourfulSplash;
     public ProgressOption splashChangeInterval;
 
 
-    private final List<Option> optionsInstance = Lists.newArrayList();
+    private final ArrayList<Option> optionsInstance = new ArrayList<>();
     protected OptionsList list;
 
     public static ConfigScreen buildConfigScreen(Screen p){
@@ -36,16 +33,17 @@ public class ConfigScreen  extends OptionsSubScreen {
 
     private ConfigScreen(Screen screen) {
         super(screen,Minecraft.getInstance().options, new TranslatableComponent("mcmodsplash.config.title"));
-        this.obtainSplashOnline = CycleOption.createOnOff(
+        Minecraft minecraft = Minecraft.getInstance();
+        this.obtainSplashOnline = new BooleanOption(
                 "mcmodsplash.config.obtainSplashOnline",
                 new TranslatableComponent("mcmodsplash.config.obtainSplashOnline.tip"),
                 (options) -> MCMODSplash.getInstance().config.obtainSplashOnline,
-                (options, option, boolean_) -> MCMODSplash.getInstance().config.obtainSplashOnline = boolean_);
-        this.colourfulSplash = CycleOption.createOnOff(
+                (options, boolean_) -> MCMODSplash.getInstance().config.obtainSplashOnline = boolean_);
+        this.colourfulSplash = new BooleanOption(
                 "mcmodsplash.config.colourfulSplash",
                 new TranslatableComponent("mcmodsplash.config.colourfulSplash.tip"),
                 (options) ->MCMODSplash.getInstance().config.colourfulSplash,
-                (options, option, boolean_) -> MCMODSplash.getInstance().config.colourfulSplash = boolean_);
+                (options, boolean_) -> MCMODSplash.getInstance().config.colourfulSplash = boolean_);
         this.getSplashTimeout = new ProgressOption(
                 "mcmodsplash.config.getSplashTimeout",
                 100,
@@ -53,9 +51,9 @@ public class ConfigScreen  extends OptionsSubScreen {
                 1.0f,
                 (options) -> (double) MCMODSplash.getInstance().config.MCMOD_TIMEOUT,
                 (options, double_) -> MCMODSplash.getInstance().config.MCMOD_TIMEOUT = double_.intValue(),
-                (options, progressOption) -> new TextComponent(new TranslatableComponent("mcmodsplash.config.getSplashTimeout").getString()+" : "+MCMODSplash.getInstance().config.MCMOD_TIMEOUT+"ms"),
-                (minecraft)-> minecraft.font.split(new TranslatableComponent("mcmodsplash.config.colourfulSplash.tip"), 200)
+                (options, progressOption) -> new TextComponent(new TranslatableComponent("mcmodsplash.config.getSplashTimeout").getString()+" : "+MCMODSplash.getInstance().config.MCMOD_TIMEOUT+"ms")
         );
+        this.getSplashTimeout.setTooltip(minecraft.font.split(new TranslatableComponent("mcmodsplash.config.getSplashTimeout.tip"), 200));
         this.splashChangeInterval = new ProgressOption(
                 "mcmodsplash.config.splashChangeInterval",
                 -1,
@@ -69,9 +67,9 @@ public class ConfigScreen  extends OptionsSubScreen {
                     if (integer == -1)return new TextComponent(component.getString() + " : " +CommonComponents.OPTION_OFF.getString());
                     if (integer == 10)return new TextComponent(component.getString() + " : " +"让你飞起来");
                     return new TextComponent(component.getString() + " : " + integer/1000 + "s");
-                },
-                (minecraft)-> minecraft.font.split(new TranslatableComponent("mcmodsplash.config.splashChangeInterval.tip"), 200)
+                }
         );
+        this.splashChangeInterval.setTooltip(minecraft.font.split(new TranslatableComponent("mcmodsplash.config.splashChangeInterval.tip"), 200));
         this.optionsInstance.add(this.obtainSplashOnline);
         this.optionsInstance.add(this.getSplashTimeout);
         this.optionsInstance.add(this.colourfulSplash);
@@ -90,7 +88,7 @@ public class ConfigScreen  extends OptionsSubScreen {
     }
 
     protected void createFooter() {
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 27, 200, 20, CommonComponents.GUI_DONE, (button) -> {
+        this.addButton(new Button(this.width / 2 - 100, this.height - 27, 200, 20, CommonComponents.GUI_DONE, (button) -> {
             this.updateConfig();
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.lastScreen);
@@ -112,7 +110,9 @@ public class ConfigScreen  extends OptionsSubScreen {
         drawCenteredString(poseStack, this.font, this.title, this.width / 2, 20, 16777215);
         super.render(poseStack, i, j, f);
         List<FormattedCharSequence> list = tooltipAt(this.list, i, j);
-        this.renderTooltip(poseStack, list, i, j);
+        if (list != null) {
+            this.renderTooltip(poseStack, list, i, j);
+        }
     }
 
     @Override
